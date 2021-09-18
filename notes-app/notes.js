@@ -8,11 +8,9 @@ const addNote = (title, body) => {
   }
   const notes = loadNotes();
 
-  const duplicateNotes = notes.filter((n) => {
-    return n.title === title;
-  });
+  const duplicateNote = notes.find((n) => n.title === title);
 
-  if (duplicateNotes.length > 0) {
+  if (duplicateNote) {
     console.log(
       chalk.red.bold.inverse("Already exists a note with the same title!")
     );
@@ -53,9 +51,12 @@ const readNotes = (title) => {
     return;
   }
 
-  const note = loadNotes()
-    .filter((v) => v.title === title)
-    .shift();
+  const note = loadNotes().find((v) => v.title === title);
+
+  if (!note) {
+    console.log(chalk.red.bold.inverse("There isn't any note with this title"));
+    return;
+  }
   console.log("Notes: ", note);
 
   return note;
